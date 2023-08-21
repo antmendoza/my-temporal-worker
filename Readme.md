@@ -14,4 +14,4 @@
 
 - Deploy workers
 
-- `./3_kube-apply-deployment.sh`
+`./3_kube-apply-deployment.sh`

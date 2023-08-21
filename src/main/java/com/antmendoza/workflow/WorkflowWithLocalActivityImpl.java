@@ -9,7 +9,7 @@ import java.time.Duration;
 import java.util.Random;
 
 @WorkflowImpl(taskQueues = "DemoTaskQueue")
-public class WorkflowWithLocalActivityImpl implements WorkflowWithLocalActivity3 {
+public class WorkflowWithLocalActivityImpl implements WorkflowWithLocalActivity4 {
     public static final Logger log = Workflow.getLogger(WorkflowWithLocalActivityImpl.class);
 
     private final GreetingActivities localActivities =

@@ -1,6 +1,8 @@
 package com.antmendoza;
 
-import com.antmendoza.workflow.WorkflowWithLocalActivity3;
+import com.antmendoza.workflow.WorkflowWithLocalActivity4;
+import io.temporal.api.workflowservice.v1.GetSystemInfoRequest;
+import io.temporal.api.workflowservice.v1.GetSystemInfoResponse;
 import io.temporal.client.WorkflowClient;
 import io.temporal.client.WorkflowOptions;
 import io.temporal.client.WorkflowStub;
@@ -16,9 +18,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class Starter {
 
-
     final
-    WorkflowClient client;
+    private WorkflowClient client;
 
 
     public Starter(WorkflowClient client) {
@@ -26,6 +27,7 @@ public class Starter {
     }
 
     Logger logger = LoggerFactory.getLogger(Starter.class);
+
 
 
     @EventListener(ApplicationReadyEvent.class)
@@ -39,8 +41,8 @@ public class Starter {
         while (true) {
 
 
-            WorkflowWithLocalActivity3 workflow = client
-                    .newWorkflowStub(WorkflowWithLocalActivity3.class, build);
+            WorkflowWithLocalActivity4 workflow = client
+                    .newWorkflowStub(WorkflowWithLocalActivity4.class, build);
 
 
             WorkflowClient.start(workflow::getGreeting, "input");
@@ -49,6 +51,37 @@ public class Starter {
                 logger.info("Starter... result  " + result);
                 return result;
             });
+
+
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+
+        }
+
+    }
+
+
+
+    //@EventListener(ApplicationReadyEvent.class)
+    //@Async("threadPoolTaskExecutor")
+    public void getInfo() {
+        WorkflowOptions build = WorkflowOptions.newBuilder()
+                .setTaskQueue("DemoTaskQueue").build();
+
+        logger.info("Init...  ");
+
+        while (true) {
+
+
+            GetSystemInfoResponse response = client.getWorkflowServiceStubs().blockingStub().getSystemInfo(GetSystemInfoRequest.newBuilder().build());
+
+            System.out.println("Response ok " + response);
+
+
 
 
             try {
