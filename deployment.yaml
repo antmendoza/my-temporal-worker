@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-workers
+  labels:
+    app: my-workers
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-workers
+  template:
+    metadata:
+      labels:
+        app: my-workers
+    spec:
+      containers:
+        - name: my-workers
+          image: antmendoza/my-temporal-worker
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3032
+          resources:
+            requests:
+              memory: "512M"
+              cpu: "500m"
+            limits:
+              cpu: "2"
+              memory: "1512M"

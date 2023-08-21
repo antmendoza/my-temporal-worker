@@ -1,0 +1,26 @@
+server:
+  port: 3032
+
+spring:
+  application:
+    name: temporal-demo
+  temporal:
+    namespace: default
+    connection:
+      target: 127.0.0.1:7233
+    workers:
+      - task-queue: DemoTaskQueue
+        capacity:
+          max-concurrent-workflow-task-executors: 5000
+          max-concurrent-activity-executors: 5000
+          # ^^ should be local activities
+          # max-concurrent-local-activity-executors: : 5000
+          max-concurrent-workflow-task-pollers: 5
+        rate-limits:
+          max-worker-activities-per-second: 0
+          max-task-queue-activities-per-second: 0
+    workflow-cache:
+      max-instances: 600
+      max-threads: 10000
+    workersAutoDiscovery:
+      packages: com.antmendoza

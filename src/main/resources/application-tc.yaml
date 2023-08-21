@@ -1,0 +1,11 @@
+spring.temporal:
+  namespace: antonio.a2dd6 # https://docs.temporal.io/cloud/#temporal-cloud-namespace-id
+  connection:
+    target: antonio.a2dd6.tmprl.cloud:7233
+mtls:
+  key-file: classpath:/certs/antonio-perez.key
+  cert-chain-file: classpath:/certs/antonio-perez.pem
+
+
+
+# more configuration options https://github.com/temporalio/sdk-java/tree/master/temporal-spring-boot-autoconfigure-alpha#mtls
